@@ -5,5 +5,5 @@ workflows:
     environment:
       ndk: r18b
     scripts:
-      - echo $PATH | tr ':' '\n' | sort | uniq | grep ndk
+      - echo $PATH | tr ':' '\n'
       - printenv | grep -v PATH | grep -i ndk
