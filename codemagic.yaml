@@ -14,6 +14,12 @@ workflows:
       email:
         recipients:
           - artemii.yanushevskyi@gmail.com
+      slack:
+        channel: '#my_app_xcode_codemagic_builds'
+        notify_on_build_start: true
+        notify:
+          success: true
+          failure: true
     scripts:
       - keychain initialize
       - app-store-connect fetch-signing-files "io.codemagic.banaan" --type IOS_APP_DEVELOPMENT --create
