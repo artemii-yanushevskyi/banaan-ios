@@ -22,7 +22,7 @@ workflows:
           failure: true
       app_store_connect:
         apple_id: artemii@nevercode.com
-        password: abc-abc-abc
+        password: $SOME
         # password: Encrypted(Z0FBQUFBQmdMak9maTR1U2xWU2JCMlRCRHZBZ2dmaFdkZG9udUJBNldaNW1LU0RvYmU1N1Nhc2I1QTJ6MUE2OW91V011UjdVS1pEQk9wNGlmYS04SV9fM3VqN3ZhRldSMGdiMkc1eTRwaUFhS0hUV05FbjBFV009)
     scripts:
       - keychain initialize
