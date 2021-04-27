@@ -2,6 +2,9 @@ workflows:
   build-app:
     name: Build App
     max_build_duration: 10
+    triggering:
+      events:
+        - push
     when:
       changeset:
         includes:
