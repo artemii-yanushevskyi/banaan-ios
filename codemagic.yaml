@@ -16,7 +16,7 @@ workflows:
       xcode: 12.3
       cocoapods: default
     scripts:
-      - error
+      - echo 42
     artifacts:
       - build/ios/ipa/*.ipa
       - /tmp/xcodebuild_logs/*.log
