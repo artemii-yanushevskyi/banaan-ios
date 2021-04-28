@@ -14,7 +14,7 @@ workflows:
     environment:
       xcode: 12.3
       cocoapods: default
-   scripts:
+    scripts:
       - echo 42
     artifacts:
       - build/ios/ipa/*.ipa
