@@ -10,8 +10,9 @@ workflows:
         includes:
           - '.'
         excludes:
-          - '**/*.md'
+          # - '**/*.md'
           # - '*.md'
+          - 'md-folder/**/*.md'
     environment:
       xcode: 12.3
       cocoapods: default
