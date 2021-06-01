@@ -1,21 +1,43 @@
 workflows:
   build-app:
     name: Build App
+    instance_type: mac_pro
     max_build_duration: 10
-    triggering:
-      events:
-        - push
-    when:
-      changeset:
-        includes:
-          - '.'
-        excludes:
-          - '**/*.md'
     environment:
-      xcode: 12.3
+      vars:
+        APPLE_ID: artemii@nevercode.io
+        APP_SPECIFIC_PASSWORD: guea-xcdc-nxqj-zqsd
+      xcode: 12.4
       cocoapods: default
     scripts:
-      - echo 4242
+      - keychain initialize
+      - app-store-connect fetch-signing-files "io.codemagic.banaan" --type IOS_APP_DEVELOPMENT --create
+      - keychain add-certificates
+      - xcode-project use-profiles
+      - script: agvtool new-version -all "1.0.$BUILD_NUMBER"
+        working_directory: ios-test2
+      - name: Build ipa
+        script: xcode-project build-ipa --project "ios-test2/banaan.xcodeproj" --scheme "banaan"
+      - name: Run tests
+        script: xcode-project run-tests --project "ios-test2/banaan.xcodeproj" --scheme "banaan" --graceful-exit
+        test_report: build/ios/test/*.xml
     artifacts:
       - build/ios/ipa/*.ipa
+      - /tmp/xcodebuild_logs/*.log
+    publishing:
+      app_store_connect:
+        apple_id: $APPLE_ID
+        password: $APP_SPECIFIC_PASSWORD
+  test-app:
+    name: Test App
+    instance_type: mac_pro
+    max_build_duration: 10
+    environment:
+      xcode: 12.5
+      cocoapods: default
+    scripts:
+      - name: Run tests
+        script: xcode-project run-tests --project "ios-test2/banaan.xcodeproj" --scheme "banaan" --device "iOS 14.0 iPhone 11"
+        test_report: build/ios/test/*.xml
+    artifacts:
       - /tmp/xcodebuild_logs/*.log
